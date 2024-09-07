@@ -1,0 +1,22 @@
+/* PerfumeFilter.css */
+
+.filter-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.filter-options button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+}
