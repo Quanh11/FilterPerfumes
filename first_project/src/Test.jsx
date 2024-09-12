@@ -15,11 +15,12 @@ const Test = () => {
     );
     const data = response.data;
     setPerfumes(data);
-    extractTones(data);
-    extractSeasons(data); // Added to extract seasons
-    setShowPopup(true); // Show popup after fetching perfumes
+    extractTones(data); //Tone Hương
+    extractSeasons(data); //Mùa
+    setShowPopup(true);
   };
 
+  //Tone Hương
   const extractTones = (data) => {
     const allTones = new Set();
     data.forEach((perfume) => {
@@ -29,7 +30,15 @@ const Test = () => {
     });
     setTones([...allTones]);
   };
-
+  const handleToneClick = (tone) => {
+      setSelectedTones((prevTones) =>
+        prevTones.includes(tone)
+          ? prevTones.filter((t) => t !== tone)
+          : [...prevTones, tone]
+      );
+    };
+    
+  //Mùa
   const extractSeasons = (data) => {
     const allSeasons = new Set(); // Fixed variable name
     data.forEach((perfume) => {
@@ -38,14 +47,6 @@ const Test = () => {
       if (perfume['Mùa3']) allSeasons.add(perfume['Mùa3']);
     });
     setSeasons([...allSeasons]);
-  };
-
-  const handleToneClick = (tone) => {
-    setSelectedTones((prevTones) =>
-      prevTones.includes(tone)
-        ? prevTones.filter((t) => t !== tone)
-        : [...prevTones, tone]
-    );
   };
 
   const handleSeasonsClick = (season) => {
@@ -57,7 +58,7 @@ const Test = () => {
   };
 
   const handleDoneClick = () => {
-    setShowPopup(false); // Close the popup after choosing tones
+    setShowPopup(false);
   };
 
   const filteredPerfumes = perfumes.filter((perfume) =>
@@ -82,12 +83,12 @@ const Test = () => {
               <button onClick={handleDoneClick} style={closeButtonStyle}>X</button>
             </div>
             <div style={filterCategoryContainer}>
-              {/* First Column - Tones */}
+              
+              {/* Cột Tone Hương */}
               <div style={filterColumn}>
                 <h3>Tone Hương</h3>
                 {tones.map((tone) => (
                   <p
-                    key={tone}
                     onClick={() => handleToneClick(tone)}
                     style={{
                       cursor: 'pointer',
@@ -98,13 +99,13 @@ const Test = () => {
                   </p>
                 ))}
               </div>
-              {/* Second Column - Seasons */}
+              
+              {/* Cột Mùa */}
               <div style={filterColumn}>
                 <h3>Mùa</h3>
                 {seasons.map((season) => (
                   <p
-                    key={season}
-                    onClick={() => handleSeasonsClick(season)} // Fixed handler
+                    onClick={() => handleSeasonsClick(season)}
                     style={{
                       cursor: 'pointer',
                       color: selectedSeasons.includes(season) ? 'lightblue' : 'white',
@@ -122,26 +123,26 @@ const Test = () => {
       {!showPopup && (
         <div>
           <h2>Filtered Perfumes:</h2>
-          {filteredPerfumes.length > 0 ? (
+          {filteredPerfumes.length > 0 && (
             filteredPerfumes.map((perfume) => (
               <div key={perfume.Tên}>
                 <h3>{perfume.Tên}</h3>
                 <p>Brand: {perfume.Brand}</p>
+                <p>Year: {perfume.Năm}</p>
                 {perfume['Tone Hương1'] && <p>{perfume['Tone Hương1']}</p>}
                 {perfume['Tone Hương2'] && <p>{perfume['Tone Hương2']}</p>}
                 {perfume['Tone Hương3'] && <p>{perfume['Tone Hương3']}</p>}
               </div>
             ))
-          ) : (
-            <p>No perfumes match the selected tones.</p>
           )}
+          {filteredPerfumes.length === 0 && <p>No perfumes match the selected tones.</p>}
         </div>
       )}
     </div>
   );
 };
 
-// Styles to match the popup in the image
+
 const popupStyles = {
   position: 'fixed',
   top: 0,
@@ -161,8 +162,8 @@ const popupContentStyles = {
   borderRadius: '10px',
   width: '80%',
   maxWidth: '800px',
-  height: '70vh', // Set fixed height
-  overflowY: 'auto', // Enable vertical scrolling
+  height: '70vh',
+  overflowY: 'auto',
   position: 'relative',
 };
 
