@@ -13,11 +13,11 @@ const Test = () => {
   //Thời gian
   const [selectedTimes, setSelectedTimes] = useState([]);
   const [times, setTimes] = useState([]);
-  //Độ lưu hương
-
   //Độ tuổi
-
+  const [selectedAges, setSelectedAges] = useState([]);
+  const [ages, setAges] = useState([]);
   //Giới tính
+  //Độ lưu hương
 
   const fetchPerfumes = async () => {
     const response = await axios.get(
@@ -28,9 +28,9 @@ const Test = () => {
     extractTones(data); //Tone Hương
     extractSeasons(data); //Mùa
     extractTimes(data); //Thời gian
-                        //Độ lưu hương
-                        //Độ tuổi
+    extractAges(data); //Độ tuổi
                         //Giới tính
+                        //Độ lưu hương                        
     setShowPopup(true);
   };
 
@@ -91,7 +91,18 @@ const Test = () => {
 
   //Độ lưu hương
 
-  //Độ tuổi
+  // Độ tuổi
+const extractAges = (data) => {
+  const allAges = new Set();
+  data.forEach((perfume) => {
+    if (perfume['Độ Tuổi']) allAges.add(perfume['Độ Tuổi']);
+  });
+  setAges([...allAges]);
+};
+
+const handleAgesClick = (age) => {
+  setSelectedAges([age]); 
+};
 
   //Giới tính
 
@@ -99,26 +110,27 @@ const Test = () => {
     setShowPopup(false);
   };
 
-  //Bộ lọc
-  const filteredPerfumes = perfumes.filter((perfume) =>
-    //Tone hương
-    selectedTones.every((tone) =>
-      [perfume['Tone Hương1'], perfume['Tone Hương2'], perfume['Tone Hương3']].includes(tone)
-    ) &&
-    //Mùa
-    selectedSeasons.every((season) =>
-      [perfume['Mùa1'], perfume['Mùa2'], perfume['Mùa3']].includes(season)
-    ) &&
-    //Thời gian
-    selectedTimes.some((time) =>
-      [perfume['Thời Gian1'], perfume['Thời Gian2']].includes(time)
-    ) 
-    //Độ lưu hương
-
-    //Độ tuổi
-
-    //Giới tính
-  );
+  // Bộ lọc
+const filteredPerfumes = perfumes.filter((perfume) =>
+  // Tone hương
+  selectedTones.every((tone) =>
+    [perfume['Tone Hương1'], perfume['Tone Hương2'], perfume['Tone Hương3']].includes(tone)
+  ) &&
+  // Mùa
+  selectedSeasons.every((season) =>
+    [perfume['Mùa1'], perfume['Mùa2'], perfume['Mùa3']].includes(season)
+  ) &&
+  // Thời gian
+  selectedTimes.some((time) =>
+    [perfume['Thời Gian1'], perfume['Thời Gian2']].includes(time)
+  ) &&
+  // Độ tuổi
+  selectedAges.some((age) =>
+    [perfume['Độ Tuổi']].includes(age)
+  )
+  // Giới tính
+  //Độ lưu hương
+);
 
   return (
     <div>
@@ -185,6 +197,20 @@ const Test = () => {
               {/* Cột Độ lưu hương*/}
 
               {/* Cột Độ tuổi*/}
+              <div style={filterColumn}>
+                <h3>Độ Tuổi</h3>
+                {ages.map((age) => (
+                  <p
+                    onClick={() => handleAgesClick(age)}
+                    style={{
+                      cursor: 'pointer',
+                      color: selectedAges.includes(age) ? 'lightblue' : 'white',
+                    }}
+                  >
+                    {age}
+                  </p>
+                ))}
+              </div>
 
               {/* Cột Giới tính*/}
             </div>
