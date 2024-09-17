@@ -18,6 +18,8 @@ const Test = () => {
   const [ages, setAges] = useState([]);
   //Giới tính
   //Độ lưu hương
+  const [selectedLongevities, setSelectedLongevities] = useState([]);
+  const [Longevities, setLongevities] = useState([]);
 
   const fetchPerfumes = async () => {
     const response = await axios.get(
@@ -30,7 +32,7 @@ const Test = () => {
     extractTimes(data); //Thời gian
     extractAges(data); //Độ tuổi
                         //Giới tính
-                        //Độ lưu hương                        
+    extractLongevities(data); //Độ lưu hương                        
     setShowPopup(true);
   };
 
@@ -90,6 +92,22 @@ const Test = () => {
   };
 
   //Độ lưu hương
+  const extractLongevities = (data) => {
+    const allLongevities = new Set();
+    data.forEach((perfume) => {
+      if (perfume['Độ Lưu Mùi']) allLongevities.add(perfume['Độ Lưu Mùi']);
+    });
+    setLongevities([...allLongevities]);
+  };
+
+  const handleLongevityClick = (longevity) => {
+    setSelectedLongevities((prevLongevities) =>
+      prevLongevities.includes(longevity)
+        ? prevLongevities.filter((l) => l !== longevity)
+        : [...prevLongevities, longevity]
+    );
+  };
+  
 
   // Độ tuổi
 const extractAges = (data) => {
@@ -127,9 +145,12 @@ const filteredPerfumes = perfumes.filter((perfume) =>
   // Độ tuổi
   selectedAges.some((age) =>
     [perfume['Độ Tuổi']].includes(age)
-  )
+  ) &&
   // Giới tính
   //Độ lưu hương
+  selectedLongevities.some((longevity) =>
+    [perfume['Độ Lưu Mùi']].includes(longevity)
+  )
 );
 
   return (
@@ -195,6 +216,20 @@ const filteredPerfumes = perfumes.filter((perfume) =>
               </div>
 
               {/* Cột Độ lưu hương*/}
+              <div style={filterColumn}>
+                <h3>Độ Lưu Hương</h3>
+                {Longevities.map((longevity) => (
+                  <p
+                    onClick={() => handleLongevityClick(longevity)}
+                    style={{
+                      cursor: 'pointer',
+                      color: selectedLongevities.includes(longevity) ? 'lightblue' : 'white',
+                    }}
+                  >
+                    {longevity}
+                  </p>
+                ))}
+              </div>
 
               {/* Cột Độ tuổi*/}
               <div style={filterColumn}>
