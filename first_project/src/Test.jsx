@@ -17,6 +17,8 @@ const Test = () => {
   const [selectedAges, setSelectedAges] = useState([]);
   const [ages, setAges] = useState([]);
   //Giới tính
+  const [selectedGenders, setSelectedGenders] = useState([]);
+  const [genders, setGenders] = useState([]);
   //Độ lưu hương
   const [selectedLongevities, setSelectedLongevities] = useState([]);
   const [Longevities, setLongevities] = useState([]);
@@ -31,7 +33,7 @@ const Test = () => {
     extractSeasons(data); //Mùa
     extractTimes(data); //Thời gian
     extractAges(data); //Độ tuổi
-                        //Giới tính
+    extractGenders(data); //Giới tính
     extractLongevities(data); //Độ lưu hương                        
     setShowPopup(true);
   };
@@ -119,39 +121,68 @@ const extractAges = (data) => {
 };
 
 const handleAgesClick = (age) => {
-  setSelectedAges([age]); 
+  setSelectedAges((prevAges) =>
+    prevAges.includes(age)
+      ? [] // Deselect if the clicked age is already selected
+      : [age] // Select the new age and deselect the previous one
+  );
 };
 
+
+
   //Giới tính
+  const extractGenders = (data) => {
+    const allGenders = new Set();
+    data.forEach((perfume) => {
+      if (perfume['Giới Tính']) allGenders.add(perfume['Giới Tính']);
+
+    });
+    setGenders([...allGenders]);
+  };
+
+  const handleGenderClick = (gender) => {
+    setSelectedGenders((prevGenders) =>
+      prevGenders.includes(gender)
+        ? [] // Deselect if the clicked gender is already selected
+        : [gender] // Select the new gender and deselect the previous one
+    );
+  };
+  
+  
+
 
   const handleDoneClick = () => {
     setShowPopup(false);
   };
 
   // Bộ lọc
-const filteredPerfumes = perfumes.filter((perfume) =>
-  // Tone hương
-  selectedTones.every((tone) =>
-    [perfume['Tone Hương1'], perfume['Tone Hương2'], perfume['Tone Hương3']].includes(tone)
-  ) &&
-  // Mùa
-  selectedSeasons.every((season) =>
-    [perfume['Mùa1'], perfume['Mùa2'], perfume['Mùa3']].includes(season)
-  ) &&
-  // Thời gian
-  selectedTimes.some((time) =>
-    [perfume['Thời Gian1'], perfume['Thời Gian2']].includes(time)
-  ) &&
-  // Độ tuổi
-  selectedAges.some((age) =>
-    [perfume['Độ Tuổi']].includes(age)
-  ) &&
-  // Giới tính
-  //Độ lưu hương
-  selectedLongevities.some((longevity) =>
-    [perfume['Độ Lưu Mùi']].includes(longevity)
-  )
-);
+  const filteredPerfumes = perfumes.filter((perfume) =>
+    // Tone hương
+    (selectedTones.length === 0 || selectedTones.every((tone) =>
+      [perfume['Tone Hương1'], perfume['Tone Hương2'], perfume['Tone Hương3']].includes(tone)
+    )) &&
+    // Mùa
+    (selectedSeasons.length === 0 || selectedSeasons.every((season) =>
+      [perfume['Mùa1'], perfume['Mùa2'], perfume['Mùa3']].includes(season)
+    )) &&
+    // Thời gian
+    (selectedTimes.length === 0 || selectedTimes.some((time) =>
+      [perfume['Thời Gian1'], perfume['Thời Gian2']].includes(time)
+    )) &&
+    // Độ tuổi
+    (selectedAges.length === 0 || selectedAges.some((age) =>
+      [perfume['Độ Tuổi']].includes(age)
+    )) &&
+    // Giới tính
+    (selectedGenders.length === 0 || selectedGenders.every((gender) =>
+      [perfume['Giới Tính']].includes(gender)
+    )) &&
+    //Độ lưu hương
+    (selectedLongevities.length === 0 || selectedLongevities.some((longevity) =>
+      [perfume['Độ Lưu Mùi']].includes(longevity)
+    ))
+  );
+  
 
   return (
     <div>
@@ -248,6 +279,20 @@ const filteredPerfumes = perfumes.filter((perfume) =>
               </div>
 
               {/* Cột Giới tính*/}
+              <div style={filterColumn}>
+                <h3>Giới Tính</h3>
+                {genders.map((gender) => (
+                  <p
+                    onClick={() => handleGenderClick(gender)}
+                    style={{
+                      cursor: 'pointer',
+                      color: selectedGenders.includes(gender) ? 'lightblue' : 'white',
+                    }}
+                  >
+                    {gender}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
         </div>
