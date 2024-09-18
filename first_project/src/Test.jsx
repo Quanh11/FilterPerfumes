@@ -123,8 +123,8 @@ const extractAges = (data) => {
 const handleAgesClick = (age) => {
   setSelectedAges((prevAges) =>
     prevAges.includes(age)
-      ? [] // Deselect if the clicked age is already selected
-      : [age] // Select the new age and deselect the previous one
+      ? []
+      : [age]
   );
 };
 
@@ -143,13 +143,10 @@ const handleAgesClick = (age) => {
   const handleGenderClick = (gender) => {
     setSelectedGenders((prevGenders) =>
       prevGenders.includes(gender)
-        ? [] // Deselect if the clicked gender is already selected
-        : [gender] // Select the new gender and deselect the previous one
+        ? []
+        : [gender]
     );
   };
-  
-  
-
 
   const handleDoneClick = () => {
     setShowPopup(false);
@@ -186,9 +183,9 @@ const handleAgesClick = (age) => {
 
   return (
     <div>
-      <h1>Perfume Filter</h1>
-      <button onClick={fetchPerfumes}>Click to start</button>
-
+      <h2>
+      <button onClick={fetchPerfumes}>Filter Perfume:</button>
+      </h2>
       {showPopup && (
         <div style={popupStyles}>
           <div style={popupContentStyles}>
@@ -210,6 +207,38 @@ const handleAgesClick = (age) => {
                     }}
                   >
                     {tone}
+                  </p>
+                ))}
+              </div>
+
+              {/* Cột Giới tính*/}
+              <div style={filterColumn}>
+                <h3>Giới Tính</h3>
+                {genders.map((gender) => (
+                  <p
+                    onClick={() => handleGenderClick(gender)}
+                    style={{
+                      cursor: 'pointer',
+                      color: selectedGenders.includes(gender) ? 'lightblue' : 'white',
+                    }}
+                  >
+                    {gender}
+                  </p>
+                ))}
+              </div>
+
+              {/* Cột Độ tuổi*/}
+              <div style={filterColumn}>
+                <h3>Độ Tuổi</h3>
+                {ages.map((age) => (
+                  <p
+                    onClick={() => handleAgesClick(age)}
+                    style={{
+                      cursor: 'pointer',
+                      color: selectedAges.includes(age) ? 'lightblue' : 'white',
+                    }}
+                  >
+                    {age}
                   </p>
                 ))}
               </div>
@@ -261,38 +290,6 @@ const handleAgesClick = (age) => {
                   </p>
                 ))}
               </div>
-
-              {/* Cột Độ tuổi*/}
-              <div style={filterColumn}>
-                <h3>Độ Tuổi</h3>
-                {ages.map((age) => (
-                  <p
-                    onClick={() => handleAgesClick(age)}
-                    style={{
-                      cursor: 'pointer',
-                      color: selectedAges.includes(age) ? 'lightblue' : 'white',
-                    }}
-                  >
-                    {age}
-                  </p>
-                ))}
-              </div>
-
-              {/* Cột Giới tính*/}
-              <div style={filterColumn}>
-                <h3>Giới Tính</h3>
-                {genders.map((gender) => (
-                  <p
-                    onClick={() => handleGenderClick(gender)}
-                    style={{
-                      cursor: 'pointer',
-                      color: selectedGenders.includes(gender) ? 'lightblue' : 'white',
-                    }}
-                  >
-                    {gender}
-                  </p>
-                ))}
-              </div>
             </div>
           </div>
         </div>
@@ -300,7 +297,6 @@ const handleAgesClick = (age) => {
 
       {!showPopup && (
         <div>
-          <h2>Filtered Perfumes:</h2>
           {filteredPerfumes.length > 0 && (
             filteredPerfumes.map((perfume) => (
               <div key={perfume.Tên}>
@@ -366,7 +362,7 @@ const filterCategoryContainer = {
 };
 
 const filterColumn = {
-  width: '18%',
+  width: '25%',
   textAlign: 'left',
 };
 
