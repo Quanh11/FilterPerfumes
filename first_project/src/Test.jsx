@@ -196,7 +196,7 @@ const handleAgesClick = (age) => {
             <div style={filterCategoryContainer}>
               
               {/* Cột Tone Hương */}
-              <div style={filterColumn}>
+              <div style={filterColumn1}>
                 <h3>Tone Hương</h3>
                 {tones.map((tone) => (
                   <p
@@ -212,7 +212,7 @@ const handleAgesClick = (age) => {
               </div>
 
               {/* Cột Giới tính*/}
-              <div style={filterColumn}>
+              <div style={filterColumn2}>
                 <h3>Giới Tính</h3>
                 {genders.map((gender) => (
                   <p
@@ -228,7 +228,7 @@ const handleAgesClick = (age) => {
               </div>
 
               {/* Cột Độ tuổi*/}
-              <div style={filterColumn}>
+              <div style={filterColumn2}>
                 <h3>Độ Tuổi</h3>
                 {ages.map((age) => (
                   <p
@@ -244,7 +244,7 @@ const handleAgesClick = (age) => {
               </div>
               
               {/* Cột Mùa */}
-              <div style={filterColumn}>
+              <div style={filterColumn2}>
                 <h3>Mùa</h3>
                 {seasons.map((season) => (
                   <p
@@ -260,7 +260,7 @@ const handleAgesClick = (age) => {
               </div>
 
               {/* Cột Thời gian */}
-              <div style={filterColumn}>
+              <div style={filterColumn2}>
                 <h3>Thời gian</h3>
                 {times.map((time) => (
                   <p
@@ -276,7 +276,7 @@ const handleAgesClick = (age) => {
               </div>
 
               {/* Cột Độ lưu hương*/}
-              <div style={filterColumn}>
+              <div style={filterColumn3}>
                 <h3>Độ Lưu Hương</h3>
                 {Longevities.map((longevity) => (
                   <p
@@ -361,9 +361,19 @@ const filterCategoryContainer = {
   justifyContent: 'space-between',
 };
 
-const filterColumn = {
+const filterColumn1 = {
   width: '25%',
   textAlign: 'left',
+};
+
+const filterColumn2 = {
+  width: '25%',
+  textAlign: 'middle',
+};
+
+const filterColumn3 = {
+  width: '25%',
+  textAlign: 'right',
 };
 
 export default Test;
