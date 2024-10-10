@@ -1,5 +1,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+import image1 from './assets/image1.png';
+import image2 from './assets/image2.png';
+import image3 from './assets/image3.png';
+import image4 from './assets/image4.png';
+import image5 from './assets/image5.png';
+
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: true,  
+  autoplaySpeed: 2000, 
+};
 
 const Test = () => {
   const [perfumes, setPerfumes] = useState([]);
@@ -183,9 +202,55 @@ const handleAgesClick = (age) => {
 
   return (
     <div>
-      <h2>
-      <button onClick={fetchPerfumes}>Filter Perfume:</button>
-      </h2>
+      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+        
+        {/* Slider Component */}
+        <div style={sliderContainerStyle}>
+          <Slider {...settings}>
+            <div>
+              <img
+                src={image1}
+                alt="Brand 1"
+                style={imageStyle}
+              />
+            </div>
+            <div>
+              <img
+                src={image2}
+                alt="Brand 2"
+                style={imageStyle}
+              />
+            </div>
+            <div>
+              <img
+                src={image3}
+                alt="Brand 3"
+                style={imageStyle}
+              />
+            </div>
+            <div>
+              <img
+                src={image4}
+                alt="Brand 4"
+                style={imageStyle}
+              />
+            </div>
+            <div>
+              <img
+                src={image5}
+                alt="Brand 5"
+                style={imageStyle}
+              />
+            </div>
+            {/* Add more brand images as needed */}
+          </Slider>
+        </div>
+
+        <h2>
+          <button onClick={fetchPerfumes}>Filter Perfume</button>
+        </h2>
+      </div>
+
       {showPopup && (
         <div style={popupStyles}>
           <div style={popupContentStyles}>
@@ -203,7 +268,7 @@ const handleAgesClick = (age) => {
                     onClick={() => handleToneClick(tone)}
                     style={{
                       cursor: 'pointer',
-                      color: selectedTones.includes(tone) ? 'lightblue' : 'white',
+                      color: selectedTones.includes(tone) ? 'gray' : 'black',
                     }}
                   >
                     {tone}
@@ -219,7 +284,7 @@ const handleAgesClick = (age) => {
                     onClick={() => handleGenderClick(gender)}
                     style={{
                       cursor: 'pointer',
-                      color: selectedGenders.includes(gender) ? 'lightblue' : 'white',
+                      color: selectedGenders.includes(gender) ? 'gray' : 'black',
                     }}
                   >
                     {gender}
@@ -235,7 +300,7 @@ const handleAgesClick = (age) => {
                     onClick={() => handleAgesClick(age)}
                     style={{
                       cursor: 'pointer',
-                      color: selectedAges.includes(age) ? 'lightblue' : 'white',
+                      color: selectedAges.includes(age) ? 'gray' : 'black',
                     }}
                   >
                     {age}
@@ -251,7 +316,7 @@ const handleAgesClick = (age) => {
                     onClick={() => handleSeasonClick(season)}
                     style={{
                       cursor: 'pointer',
-                      color: selectedSeasons.includes(season) ? 'lightblue' : 'white',
+                      color: selectedSeasons.includes(season) ? 'gray' : 'black',
                     }}
                   >
                     {season}
@@ -267,7 +332,7 @@ const handleAgesClick = (age) => {
                     onClick={() => handleTimeClick(time)}
                     style={{
                       cursor: 'pointer',
-                      color: selectedTimes.includes(time) ? 'lightblue' : 'white',
+                      color: selectedTimes.includes(time) ? 'gray' : 'black',
                     }}
                   >
                     {time}
@@ -283,7 +348,7 @@ const handleAgesClick = (age) => {
                     onClick={() => handleLongevityClick(longevity)}
                     style={{
                       cursor: 'pointer',
-                      color: selectedLongevities.includes(longevity) ? 'lightblue' : 'white',
+                      color: selectedLongevities.includes(longevity) ? 'gray' : 'black',
                     }}
                   >
                     {longevity}
@@ -316,6 +381,16 @@ const handleAgesClick = (age) => {
   );
 };
 
+const sliderContainerStyle = {
+  transform: 'translateY(-40px)', // Dịch slider lên trên
+  marginBottom: '40px',
+};
+
+const imageStyle = {
+  width: '1400px',  // Tăng kích thước hình ảnh
+  height: 'auto', 
+  margin: '0 auto',
+};
 
 const popupStyles = {
   position: 'fixed',
@@ -323,15 +398,15 @@ const popupStyles = {
   left: 0,
   width: '100%',
   height: '100%',
-  backgroundColor: 'rgba(0, 0, 0, 0.9)',
+  backgroundColor: 'rgba(255, 255, 255, 0.9)',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
 };
 
 const popupContentStyles = {
-  backgroundColor: '#181818',
-  color: 'white',
+  backgroundColor: '#fff', 
+  color: '#000',
   padding: '20px',
   borderRadius: '10px',
   width: '80%',
@@ -351,7 +426,7 @@ const popupHeader = {
 const closeButtonStyle = {
   background: 'none',
   border: 'none',
-  color: 'white',
+  color: 'black',
   fontSize: '20px',
   cursor: 'pointer',
 };
